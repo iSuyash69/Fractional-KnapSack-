@@ -20,17 +20,17 @@ const input = {
   
   
   function pwRatio(input){
-      for(let i=0;i<input.weight.length;i++){
+      for(let i=0;i<input.n;i++){
           input.pwRatio.push(Number((input.profit[i]/input.weight[i]).toFixed(2)));
       }
-      for(let i=0;i<input.pwRatio.length;i++){
-          for(let j=i+1;j<input.pwRatio.length;j++){
-              if(input.pwRatio[i]<input.pwRatio[j]){
+      for(let i=0;i<input.n;i++){                   
+          for(let j=i+1;j<input.n;j++){
+              if(input.pwRatio[i]<input.pwRatio[j]){             //sorting pwRatio array using insertion sort in descending order
                   let temp=input.pwRatio[i];
                   input.pwRatio[i]=input.pwRatio[j];
                   input.pwRatio[j]=temp;
-                  temp=input.weight[i];
-                  input.weight[i]=input.weight[j];
+                  temp=input.weight[i];                          //swaping postions of weight and profit array wrt to swaping in pwRatio array, 
+                  input.weight[i]=input.weight[j];                   //so that their indexes will remain the same
                   input.weight[j]=temp;
                   temp=input.profit[i];
                   input.profit[i]=input.profit[j];
@@ -43,21 +43,21 @@ const input = {
   
   function giveOutput(input){
       let solution=0;
-      for(let i=0;i<input.pwRatio.length;i++){
+      for(let i=0;i<input.n;i++){
           if(input.weight[i]<input.capacity){
               solution+=input.profit[i];
               input.capacity-=input.weight[i];
           }
           else if(input.weight[i]>input.capacity){
-              let remainingValue=Math.ceil(input.capacity*((input.profit[i]/input.weight[i])));
-              solution+=remainingValue;
+              let remainingValueProfit=Math.ceil(input.capacity*((input.profit[i]/input.weight[i])));             //performing fractional knapsack
+              solution+=remainingValueProfit;
               input.capacity-=input.capacity;
               if(input.capacity==0){
                   break;
               }
           }
       }
-      console.log(solution);
+      console.log('Maximum profit will be: '+solution);
   }
   
   
